@@ -31,249 +31,63 @@
       --accent-hover: #2563eb;
       --accent-text: #ffffff;
     }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      transition: background 0.2s, color 0.2s;
-      min-height: 100vh;
-    }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); transition: background 0.2s, color 0.2s; min-height: 100vh; }
     .app { max-width: 480px; margin: 0 auto; padding: 28px 20px 100px; }
 
-    .token-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
-    .field-label {
-      font-size: 10px;
-      color: var(--text3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 7px;
-    }
+    .token-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+    .field-label { font-size: 10px; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 7px; }
     .token-row { display: flex; gap: 8px; }
-    .token-input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-family: var(--font);
-      font-size: 12px;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.15s;
-    }
+    .token-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: var(--font); font-size: 12px; color: var(--text); outline: none; transition: border-color 0.15s; }
     .token-input:focus { border-color: var(--accent); }
-    .token-btn {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 8px 14px;
-      font-family: var(--font);
-      font-size: 11px;
-      color: var(--text2);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s;
-    }
+    .token-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; font-family: var(--font); font-size: 11px; color: var(--text2); cursor: pointer; white-space: nowrap; transition: all 0.15s; }
     .token-btn:hover { border-color: var(--accent); color: var(--accent); }
     .token-status { font-size: 10px; margin-top: 6px; min-height: 14px; }
     .token-status.ok { color: var(--accent); }
     .token-status.err { color: #ef4444; }
 
     .input-section { margin-bottom: 0; }
-    .meal-textarea {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-family: var(--font);
-      font-size: 13px;
-      color: var(--text);
-      resize: none;
-      outline: none;
-      min-height: 88px;
-      line-height: 1.65;
-      transition: border-color 0.15s;
-    }
+    .meal-textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; font-family: var(--font); font-size: 13px; color: var(--text); resize: none; outline: none; min-height: 88px; line-height: 1.65; transition: border-color 0.15s; }
     .meal-textarea:focus { border-color: var(--accent); }
     .meal-textarea::placeholder { color: var(--text3); }
 
     .options-row { display: flex; gap: 7px; margin-top: 10px; margin-bottom: 14px; }
-    .type-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 16px;
-      font-family: var(--font);
-      font-size: 11px;
-      color: var(--text2);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .type-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--accent-text);
-    }
+    .type-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 16px; font-family: var(--font); font-size: 11px; color: var(--text2); cursor: pointer; transition: all 0.15s; }
+    .type-btn.active { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
 
-    .analyze-btn {
-      width: 100%;
-      background: var(--accent);
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent-text);
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: background 0.15s;
-    }
+    .analyze-btn { width: 100%; background: var(--accent); border: none; border-radius: 10px; padding: 14px; font-family: var(--font); font-size: 13px; font-weight: 700; color: var(--accent-text); cursor: pointer; letter-spacing: 0.05em; transition: background 0.15s; }
     .analyze-btn:hover { background: var(--accent-hover); }
-    .analyze-btn:disabled {
-      background: var(--surface2);
-      color: var(--text3);
-      cursor: not-allowed;
-    }
+    .analyze-btn:disabled { background: var(--surface2); color: var(--text3); cursor: not-allowed; }
 
-    .divider {
-      margin: 28px 0;
-      border: none;
-      border-top: 1px solid var(--border);
-    }
+    .divider { margin: 28px 0; border: none; border-top: 1px solid var(--border); }
 
     .result-section { display: none; }
     .result-section.visible { display: block; }
-
-    .thinking {
-      text-align: center;
-      padding: 32px;
-      color: var(--text3);
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      display: none;
-    }
+    .thinking { text-align: center; padding: 32px; color: var(--text3); font-size: 12px; letter-spacing: 0.1em; display: none; }
     .thinking.visible { display: block; }
 
-    .scores-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .score-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 8px;
-      text-align: center;
-    }
-    .score-card .label {
-      font-size: 9px;
-      color: var(--text3);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 7px;
-    }
-    .score-card .val {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .score-card .grade {
-      font-size: 10px;
-      margin-top: 3px;
-      color: var(--text2);
-    }
+    .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+    .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 8px; text-align: center; }
+    .score-card .label { font-size: 9px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 7px; }
+    .score-card .val { font-size: 22px; font-weight: 700; }
+    .score-card .grade { font-size: 10px; margin-top: 3px; color: var(--text2); }
 
     .meta-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .meta-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 9px 12px;
-      font-size: 10px;
-      color: var(--text3);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      flex: 1;
-      text-align: center;
-    }
-    .meta-item span {
-      display: block;
-      font-size: 15px;
-      color: var(--text);
-      font-weight: 700;
-      margin-top: 3px;
-      letter-spacing: 0;
-    }
+    .meta-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; flex: 1; text-align: center; }
+    .meta-item span { display: block; font-size: 15px; color: var(--text); font-weight: 700; margin-top: 3px; letter-spacing: 0; }
 
-    .comment-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      font-size: 12px;
-      line-height: 1.75;
-      color: var(--text2);
-    }
+    .comment-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; font-size: 12px; line-height: 1.75; color: var(--text2); }
     .comment-box .tag { color: var(--accent); font-weight: 700; }
 
-    .save-btn {
-      width: 100%;
-      background: transparent;
-      border: 1.5px solid var(--accent);
-      border-radius: 10px;
-      padding: 13px;
-      font-family: var(--font);
-      font-size: 13px;
-      color: var(--accent);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
+    .save-btn { width: 100%; background: transparent; border: 1.5px solid var(--accent); border-radius: 10px; padding: 13px; font-family: var(--font); font-size: 13px; color: var(--accent); cursor: pointer; transition: all 0.15s; }
     .save-btn:hover { background: var(--accent); color: var(--accent-text); }
-    .save-btn:disabled {
-      border-color: var(--border);
-      color: var(--text3);
-      cursor: not-allowed;
-    }
+    .save-btn:disabled { border-color: var(--border); color: var(--text3); cursor: not-allowed; }
 
-    .status-msg {
-      text-align: center;
-      font-size: 11px;
-      margin-top: 10px;
-      min-height: 16px;
-    }
+    .status-msg { text-align: center; font-size: 11px; margin-top: 10px; min-height: 16px; }
     .status-msg.ok { color: var(--accent); }
     .status-msg.err { color: #ef4444; }
     .status-msg.loading { color: var(--text3); }
 
-    .theme-toggle {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      transition: all 0.15s;
-    }
+    .theme-toggle { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.1); transition: all 0.15s; }
     .theme-toggle:hover { border-color: var(--accent); }
   </style>
 </head>
@@ -320,23 +134,17 @@
 <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
 
 <script>
+  const GEMINI_API_KEY = 'AIzaSyBjeR9e8Ue44e9giA3gNmUwH_75zbeCmx0';
   const DB_ID = '31ed6ef369f780dc9ce6e6bc7177c6ff';
   let mealType = '아침';
   let lastResult = null;
 
-  // 테마 초기화: 다크모드 감지 (시스템 or 시간)
   function initTheme() {
     const hour = new Date().getHours();
     const isNight = hour >= 19 || hour < 7;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const saved = localStorage.getItem('theme');
-
-    let theme;
-    if (saved) {
-      theme = saved;
-    } else {
-      theme = (isNight || prefersDark) ? 'dark' : 'light';
-    }
+    const theme = saved || ((isNight || prefersDark) ? 'dark' : 'light');
     applyTheme(theme);
   }
 
@@ -353,7 +161,6 @@
     applyTheme(next);
   }
 
-  // 토큰
   function saveToken() {
     const t = document.getElementById('tokenInput').value.trim();
     if (!t.startsWith('ntn_') && !t.startsWith('secret_')) {
@@ -376,7 +183,20 @@
     mealType = type;
   }
 
-  // 채점
+  function getGradeColor(score) {
+    if (score >= 90) return '#2563eb';
+    if (score >= 80) return '#16a34a';
+    if (score >= 70) return '#ca8a04';
+    return '#ef4444';
+  }
+
+  function getGradeLabel(score) {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    return 'D';
+  }
+
   async function analyze() {
     const meal = document.getElementById('mealInput').value.trim();
     if (!meal) return;
@@ -386,36 +206,52 @@
     document.getElementById('thinking').classList.add('visible');
     document.getElementById('statusMsg').textContent = '';
 
+    const prompt = `당신은 영양 전문가입니다. 아래 식사를 분석하고 JSON만 반환하세요. 다른 텍스트 없이 순수 JSON만 출력하세요.
+
+사용자 개인 건강 수치 (채점 기준점):
+- 공복혈당: 115 mg/dL
+- 수축기 혈압: 131 mmHg
+- LDL 콜레스테롤: 121 mg/dL
+
+채점 기준 (각 100점 만점, 감점 방식):
+[BS - 혈당] 공복혈당 115 기준. 감점: 단순당, 정제탄수화물, 고GI. 유지: 복합탄수화물, 식이섬유, 단백질균형
+[BP - 혈압] 수축기 131 기준. 감점: 고나트륨(국물,찌개,가공식품). 유지: 칼륨풍부채소, 저염식
+[CHOL - 콜레] LDL 121 기준. 감점: 포화지방,튀김,트랜스지방. 유지: 불포화지방산,수용성식이섬유
+[Score] 단순평균 아님. 가장 낮은 항목에 가중치. 하나 폭락하면 전체도 크게 하락.
+[등급] 90이상=A, 80~89=B, 70~79=C, 69이하=D. 플러스/마이너스 금지.
+[Prot] 단백질 추정량(g)만 기재.
+[Comment] [혈당] [혈압] [콜레] [프로틴] 4가지 관점, 각 30자 내외 한국어.
+
+식사: ${meal}
+식사 유형: ${mealType}
+
+반환 JSON (이것만 출력):
+{"BS":숫자,"BP":숫자,"CHOL":숫자,"Score":숫자,"Prot":숫자,"Kcal":숫자,"Comment":"[혈당] ... [혈압] ... [콜레] ... [프로틴] ..."}`;
+
     try {
-      const res = await fetch('/api/score', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ meal, type: mealType })
-      });
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.3 }
+          })
+        }
+      );
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || '채점 실패');
-      lastResult = data;
-      renderResult(data);
+      const raw = data.candidates[0].content.parts[0].text;
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('JSON을 찾을 수 없음');
+      lastResult = JSON.parse(match[0]);
+      renderResult(lastResult);
     } catch(e) {
       alert('채점 실패: ' + e.message);
     }
 
     document.getElementById('thinking').classList.remove('visible');
     document.getElementById('analyzeBtn').disabled = false;
-  }
-
-  function getGradeClass(score) {
-    if (score >= 90) return 'color:#2563eb';
-    if (score >= 80) return 'color:#16a34a';
-    if (score >= 70) return 'color:#ca8a04';
-    return 'color:#ef4444';
-  }
-
-  function getGradeLabel(score) {
-    if (score >= 90) return 'A';
-    if (score >= 80) return 'B';
-    if (score >= 70) return 'C';
-    return 'D';
   }
 
   function renderResult(r) {
@@ -428,7 +264,7 @@
     document.getElementById('scoresGrid').innerHTML = scores.map(s => `
       <div class="score-card">
         <div class="label">${s.label}</div>
-        <div class="val" style="${getGradeClass(s.val)}">${s.val}</div>
+        <div class="val" style="color:${getGradeColor(s.val)}">${s.val}</div>
         <div class="grade">${getGradeLabel(s.val)}</div>
       </div>
     `).join('');
@@ -445,11 +281,9 @@
       .replace(/\[콜레\]/g, '<span class="tag">[콜레]</span>')
       .replace(/\[프로틴\]/g, '<span class="tag">[프로틴]</span>');
     document.getElementById('commentBox').innerHTML = comment;
-
     document.getElementById('resultSection').classList.add('visible');
   }
 
-  // Notion 저장
   async function saveToNotion() {
     const token = localStorage.getItem('notion_token');
     if (!token) {
@@ -464,38 +298,47 @@
     document.getElementById('statusMsg').className = 'status-msg loading';
 
     const meal = document.getElementById('mealInput').value.trim();
+    const now = new Date().toISOString();
 
     try {
-      const res = await fetch('/api/notion', {
+      const res = await fetch('https://api.notion.com/v1/pages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Notion-Version': '2022-06-28'
+        },
         body: JSON.stringify({
-          token,
-          dbId: DB_ID,
-          meal,
-          type: mealType,
-          ...lastResult
+          parent: { database_id: DB_ID },
+          properties: {
+            Meal: { title: [{ text: { content: meal } }] },
+            Type: { select: { name: mealType } },
+            Score: { number: lastResult.Score },
+            BS: { number: lastResult.BS },
+            BP: { number: lastResult.BP },
+            CHOL: { number: lastResult.CHOL },
+            Prot: { number: lastResult.Prot },
+            Kcal: { number: lastResult.Kcal },
+            Comments: { rich_text: [{ text: { content: lastResult.Comment } }] },
+            Date: { date: { start: now } }
+          }
         })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || '저장 실패');
-
+      if (!res.ok) throw new Error(data.message || '저장 실패');
       document.getElementById('statusMsg').textContent = 'Notion 저장 완료!';
       document.getElementById('statusMsg').className = 'status-msg ok';
       document.getElementById('mealInput').value = '';
       lastResult = null;
       document.getElementById('resultSection').classList.remove('visible');
     } catch(e) {
-      document.getElementById('statusMsg').textContent = '저장 실패 — 토큰 또는 DB 권한 확인';
+      document.getElementById('statusMsg').textContent = '저장 실패: ' + e.message;
       document.getElementById('statusMsg').className = 'status-msg err';
     }
-
     document.getElementById('saveBtn').disabled = false;
   }
 
-  // 초기화
   initTheme();
-
   const savedToken = localStorage.getItem('notion_token');
   if (savedToken) {
     document.getElementById('tokenInput').value = savedToken;
