@@ -65,10 +65,11 @@ LDL 121 기준. 포화지방·트랜스지방 유무를 까다롭게 평가.
     );
 
     const data = await response.json();
-    const text = data.candidates[0].content.parts[0].text
-      .replace(/```json|```/g, '')
-      .trim();
-    const parsed = JSON.parse(text);
+    const raw = data.candidates[0].content.parts[0].text;
+    // JSON 블록만 추출
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('JSON을 찾을 수 없음');
+    const parsed = JSON.parse(match[0]);
     return res.status(200).json(parsed);
   } catch(e) {
     return res.status(500).json({ error: '채점 실패: ' + e.message });
