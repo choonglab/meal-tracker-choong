@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Tracker</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --surface: #f5f5f5;
+      --surface2: #ebebeb;
+      --border: #e0e0e0;
+      --text: #111111;
+      --text2: #666666;
+      --text3: #aaaaaa;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-text: #ffffff;
+      --font: 'DM Mono', 'Courier New', monospace;
+    }
+    [data-theme="dark"] {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #222222;
+      --border: #2e2e2e;
+      --text: #f0f0f0;
+      --text2: #888888;
+      --text3: #555555;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-text: #ffffff;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      transition: background 0.2s, color 0.2s;
+      min-height: 100vh;
+    }
+    .app { max-width: 480px; margin: 0 auto; padding: 28px 20px 100px; }
+
+    .token-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .field-label {
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 7px;
+    }
+    .token-row { display: flex; gap: 8px; }
+    .token-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .token-input:focus { border-color: var(--accent); }
+    .token-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-family: var(--font);
+      font-size: 11px;
+      color: var(--text2);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .token-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .token-status { font-size: 10px; margin-top: 6px; min-height: 14px; }
+    .token-status.ok { color: var(--accent); }
+    .token-status.err { color: #ef4444; }
+
+    .input-section { margin-bottom: 0; }
+    .meal-textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--text);
+      resize: none;
+      outline: none;
+      min-height: 88px;
+      line-height: 1.65;
+      transition: border-color 0.15s;
+    }
+    .meal-textarea:focus { border-color: var(--accent); }
+    .meal-textarea::placeholder { color: var(--text3); }
+
+    .options-row { display: flex; gap: 7px; margin-top: 10px; margin-bottom: 14px; }
+    .type-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-family: var(--font);
+      font-size: 11px;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .type-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .analyze-btn {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-text);
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: background 0.15s;
+    }
+    .analyze-btn:hover { background: var(--accent-hover); }
+    .analyze-btn:disabled {
+      background: var(--surface2);
+      color: var(--text3);
+      cursor: not-allowed;
+    }
+
+    .divider {
+      margin: 28px 0;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    .result-section { display: none; }
+    .result-section.visible { display: block; }
+
+    .thinking {
+      text-align: center;
+      padding: 32px;
+      color: var(--text3);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      display: none;
+    }
+    .thinking.visible { display: block; }
+
+    .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .score-card .label {
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .score-card .val {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .score-card .grade {
+      font-size: 10px;
+      margin-top: 3px;
+      color: var(--text2);
+    }
+
+    .meta-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .meta-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+    .meta-item span {
+      display: block;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 700;
+      margin-top: 3px;
+      letter-spacing: 0;
+    }
+
+    .comment-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 1.75;
+      color: var(--text2);
+    }
+    .comment-box .tag { color: var(--accent); font-weight: 700; }
+
+    .save-btn {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid var(--accent);
+      border-radius: 10px;
+      padding: 13px;
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .save-btn:hover { background: var(--accent); color: var(--accent-text); }
+    .save-btn:disabled {
+      border-color: var(--border);
+      color: var(--text3);
+      cursor: not-allowed;
+    }
+
+    .status-msg {
+      text-align: center;
+      font-size: 11px;
+      margin-top: 10px;
+      min-height: 16px;
+    }
+    .status-msg.ok { color: var(--accent); }
+    .status-msg.err { color: #ef4444; }
+    .status-msg.loading { color: var(--text3); }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      transition: all 0.15s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
+  </style>
+</head>
+<body>
+<div id="root">
+  <div class="app">
+
+    <div class="token-section">
+      <label class="field-label">Notion Integration Token</label>
+      <div class="token-row">
+        <input class="token-input" id="tokenInput" type="password" placeholder="ntn_..." />
+        <button class="token-btn" onclick="saveToken()">저장</button>
+      </div>
+      <div class="token-status" id="tokenStatus"></div>
+    </div>
+
+    <div class="input-section">
+      <label class="field-label">식사 내용</label>
+      <textarea class="meal-textarea" id="mealInput" placeholder="예: 낫또, 계란 2개, 그릭요거트, 블루베리 50g"></textarea>
+      <div class="options-row">
+        <button class="type-btn active" onclick="setType(this,'아침')">아침</button>
+        <button class="type-btn" onclick="setType(this,'점심')">점심</button>
+        <button class="type-btn" onclick="setType(this,'저녁')">저녁</button>
+        <button class="type-btn" onclick="setType(this,'간식')">간식</button>
+      </div>
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">채점하기</button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="thinking" id="thinking">채점 중...</div>
+
+    <div class="result-section" id="resultSection">
+      <div class="scores-grid" id="scoresGrid"></div>
+      <div class="meta-row" id="metaRow"></div>
+      <div class="comment-box" id="commentBox"></div>
+      <button class="save-btn" id="saveBtn" onclick="saveToNotion()">Notion에 저장</button>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+
+  </div>
+</div>
+
+<button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+
+<script>
+  const DB_ID = '31ed6ef369f780dc9ce6e6bc7177c6ff';
+  let mealType = '아침';
+  let lastResult = null;
+
+  // 테마 초기화: 다크모드 감지 (시스템 or 시간)
+  function initTheme() {
+    const hour = new Date().getHours();
+    const isNight = hour >= 19 || hour < 7;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('theme');
+
+    let theme;
+    if (saved) {
+      theme = saved;
+    } else {
+      theme = (isNight || prefersDark) ? 'dark' : 'light';
+    }
+    applyTheme(theme);
+  }
+
+  function applyTheme(theme) {
+    document.getElementById('root').setAttribute('data-theme', theme);
+    document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  function toggleTheme() {
+    const root = document.getElementById('root');
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  }
+
+  // 토큰
+  function saveToken() {
+    const t = document.getElementById('tokenInput').value.trim();
+    if (!t.startsWith('ntn_') && !t.startsWith('secret_')) {
+      setTokenStatus('올바른 토큰 형식이 아님', 'err');
+      return;
+    }
+    localStorage.setItem('notion_token', t);
+    setTokenStatus('저장됨', 'ok');
+  }
+
+  function setTokenStatus(msg, type) {
+    const el = document.getElementById('tokenStatus');
+    el.textContent = msg;
+    el.className = 'token-status ' + type;
+  }
+
+  function setType(btn, type) {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    mealType = type;
+  }
+
+  // 채점
+  async function analyze() {
+    const meal = document.getElementById('mealInput').value.trim();
+    if (!meal) return;
+
+    document.getElementById('analyzeBtn').disabled = true;
+    document.getElementById('resultSection').classList.remove('visible');
+    document.getElementById('thinking').classList.add('visible');
+    document.getElementById('statusMsg').textContent = '';
+
+    try {
+      const res = await fetch('/api/score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ meal, type: mealType })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || '채점 실패');
+      lastResult = data;
+      renderResult(data);
+    } catch(e) {
+      alert('채점 실패: ' + e.message);
+    }
+
+    document.getElementById('thinking').classList.remove('visible');
+    document.getElementById('analyzeBtn').disabled = false;
+  }
+
+  function getGradeClass(score) {
+    if (score >= 90) return 'color:#2563eb';
+    if (score >= 80) return 'color:#16a34a';
+    if (score >= 70) return 'color:#ca8a04';
+    return 'color:#ef4444';
+  }
+
+  function getGradeLabel(score) {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    return 'D';
+  }
+
+  function renderResult(r) {
+    const scores = [
+      { label: 'Total', val: r.Score },
+      { label: 'BS 혈당', val: r.BS },
+      { label: 'BP 혈압', val: r.BP },
+      { label: 'CHOL', val: r.CHOL },
+    ];
+    document.getElementById('scoresGrid').innerHTML = scores.map(s => `
+      <div class="score-card">
+        <div class="label">${s.label}</div>
+        <div class="val" style="${getGradeClass(s.val)}">${s.val}</div>
+        <div class="grade">${getGradeLabel(s.val)}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('metaRow').innerHTML = `
+      <div class="meta-item">단백질<span>${r.Prot}g</span></div>
+      <div class="meta-item">칼로리<span>${r.Kcal}kcal</span></div>
+      <div class="meta-item">유형<span>${mealType}</span></div>
+    `;
+
+    const comment = r.Comment
+      .replace(/\[혈당\]/g, '<span class="tag">[혈당]</span>')
+      .replace(/\[혈압\]/g, '<span class="tag">[혈압]</span>')
+      .replace(/\[콜레\]/g, '<span class="tag">[콜레]</span>')
+      .replace(/\[프로틴\]/g, '<span class="tag">[프로틴]</span>');
+    document.getElementById('commentBox').innerHTML = comment;
+
+    document.getElementById('resultSection').classList.add('visible');
+  }
+
+  // Notion 저장
+  async function saveToNotion() {
+    const token = localStorage.getItem('notion_token');
+    if (!token) {
+      document.getElementById('statusMsg').textContent = '먼저 Notion 토큰을 입력해줘';
+      document.getElementById('statusMsg').className = 'status-msg err';
+      return;
+    }
+    if (!lastResult) return;
+
+    document.getElementById('saveBtn').disabled = true;
+    document.getElementById('statusMsg').textContent = '저장 중...';
+    document.getElementById('statusMsg').className = 'status-msg loading';
+
+    const meal = document.getElementById('mealInput').value.trim();
+
+    try {
+      const res = await fetch('/api/notion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token,
+          dbId: DB_ID,
+          meal,
+          type: mealType,
+          ...lastResult
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || '저장 실패');
+
+      document.getElementById('statusMsg').textContent = 'Notion 저장 완료!';
+      document.getElementById('statusMsg').className = 'status-msg ok';
+      document.getElementById('mealInput').value = '';
+      lastResult = null;
+      document.getElementById('resultSection').classList.remove('visible');
+    } catch(e) {
+      document.getElementById('statusMsg').textContent = '저장 실패 — 토큰 또는 DB 권한 확인';
+      document.getElementById('statusMsg').className = 'status-msg err';
+    }
+
+    document.getElementById('saveBtn').disabled = false;
+  }
+
+  // 초기화
+  initTheme();
+
+  const savedToken = localStorage.getItem('notion_token');
+  if (savedToken) {
+    document.getElementById('tokenInput').value = savedToken;
+    setTokenStatus('저장됨', 'ok');
+  }
+</script>
+</body>
+</html>
