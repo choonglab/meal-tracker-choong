@@ -52,22 +52,22 @@ LDL 121 기준. 포화지방·트랜스지방 유무를 까다롭게 평가.
 {"BS":숫자,"BP":숫자,"CHOL":숫자,"Score":숫자,"Prot":숫자,"Kcal":숫자,"Comment":"[혈당] ... [혈압] ... [콜레] ... [프로틴] ..."}`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.3 }
+        })
+      }
+    );
 
     const data = await response.json();
-    const text = data.content[0].text.replace(/```json|```/g, '').trim();
+    const text = data.candidates[0].content.parts[0].text
+      .replace(/```json|```/g, '')
+      .trim();
     const parsed = JSON.parse(text);
     return res.status(200).json(parsed);
   } catch(e) {
