@@ -8,42 +8,44 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #ffffff;
-      --surface: #f5f5f5;
-      --surface2: #ebebeb;
-      --border: #e0e0e0;
+      --surface: #f0f0f0;
+      --surface2: #e4e4e4;
+      --border: #d8d8d8;
       --text: #111111;
-      --text2: #666666;
+      --text2: #555555;
       --text3: #aaaaaa;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
+      --accent: #3a3a3a;
+      --accent-hover: #222222;
       --accent-text: #ffffff;
       --font: 'DM Mono', 'Courier New', monospace;
     }
     [data-theme="dark"] {
-      --bg: #0f0f0f;
-      --surface: #1a1a1a;
-      --surface2: #222222;
-      --border: #2e2e2e;
-      --text: #f0f0f0;
-      --text2: #888888;
+      --bg: #141414;
+      --surface: #1f1f1f;
+      --surface2: #2a2a2a;
+      --border: #333333;
+      --text: #eeeeee;
+      --text2: #999999;
       --text3: #555555;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --accent-text: #ffffff;
+      --accent: #cccccc;
+      --accent-hover: #eeeeee;
+      --accent-text: #141414;
     }
-    body { background: var(--bg); color: var(--text); font-family: var(--font); transition: background 0.2s, color 0.2s; min-height: 100vh; }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      transition: background 0.2s, color 0.2s;
+      min-height: 100vh;
+    }
+    #root {
+      background: var(--bg);
+      min-height: 100vh;
+      transition: background 0.2s;
+    }
     .app { max-width: 480px; margin: 0 auto; padding: 28px 20px 100px; }
 
-    .token-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
     .field-label { font-size: 10px; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 7px; }
-    .token-row { display: flex; gap: 8px; }
-    .token-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: var(--font); font-size: 12px; color: var(--text); outline: none; transition: border-color 0.15s; }
-    .token-input:focus { border-color: var(--accent); }
-    .token-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; font-family: var(--font); font-size: 11px; color: var(--text2); cursor: pointer; white-space: nowrap; transition: all 0.15s; }
-    .token-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .token-status { font-size: 10px; margin-top: 6px; min-height: 14px; }
-    .token-status.ok { color: var(--accent); }
-    .token-status.err { color: #ef4444; }
 
     .input-section { margin-bottom: 0; }
     .meal-textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; font-family: var(--font); font-size: 13px; color: var(--text); resize: none; outline: none; min-height: 88px; line-height: 1.65; transition: border-color 0.15s; }
@@ -60,15 +62,36 @@
 
     .divider { margin: 28px 0; border: none; border-top: 1px solid var(--border); }
 
+    .thinking {
+      display: none;
+      text-align: center;
+      padding: 32px 0;
+    }
+    .thinking.visible { display: block; }
+    .thinking-exclaim {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .thinking-text {
+      font-size: 12px;
+      color: var(--text2);
+      letter-spacing: 0.08em;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
     .result-section { display: none; }
     .result-section.visible { display: block; }
-    .thinking { text-align: center; padding: 32px; color: var(--text3); font-size: 12px; letter-spacing: 0.1em; display: none; }
-    .thinking.visible { display: block; }
 
     .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
     .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 8px; text-align: center; }
     .score-card .label { font-size: 9px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 7px; }
-    .score-card .val { font-size: 22px; font-weight: 700; }
+    .score-card .val { font-size: 22px; font-weight: 700; color: var(--text); }
     .score-card .grade { font-size: 10px; margin-top: 3px; color: var(--text2); }
 
     .meta-row { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -76,16 +99,26 @@
     .meta-item span { display: block; font-size: 15px; color: var(--text); font-weight: 700; margin-top: 3px; letter-spacing: 0; }
 
     .comment-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; font-size: 12px; line-height: 1.75; color: var(--text2); }
-    .comment-box .tag { color: var(--accent); font-weight: 700; }
+    .comment-box .tag { color: var(--text); font-weight: 700; }
+    .comment-line { display: block; margin-bottom: 8px; }
+    .comment-line:last-child { margin-bottom: 0; }
+
+    .token-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+    .token-row { display: flex; gap: 8px; }
+    .token-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: var(--font); font-size: 12px; color: var(--text); outline: none; transition: border-color 0.15s; }
+    .token-input:focus { border-color: var(--accent); }
+    .token-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; font-family: var(--font); font-size: 11px; color: var(--text2); cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+    .token-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .token-status { font-size: 10px; margin-top: 6px; min-height: 14px; }
+    .token-status.ok { color: var(--text); }
+    .token-status.err { color: #888888; }
 
     .save-btn { width: 100%; background: transparent; border: 1.5px solid var(--accent); border-radius: 10px; padding: 13px; font-family: var(--font); font-size: 13px; color: var(--accent); cursor: pointer; transition: all 0.15s; }
     .save-btn:hover { background: var(--accent); color: var(--accent-text); }
     .save-btn:disabled { border-color: var(--border); color: var(--text3); cursor: not-allowed; }
 
-    .status-msg { text-align: center; font-size: 11px; margin-top: 10px; min-height: 16px; }
-    .status-msg.ok { color: var(--accent); }
-    .status-msg.err { color: #ef4444; }
-    .status-msg.loading { color: var(--text3); }
+    .status-msg { text-align: center; font-size: 11px; margin-top: 10px; min-height: 16px; color: var(--text2); }
+    .status-msg.err { color: #888; }
 
     .theme-toggle { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.1); transition: all 0.15s; }
     .theme-toggle:hover { border-color: var(--accent); }
@@ -94,15 +127,6 @@
 <body>
 <div id="root">
   <div class="app">
-
-    <div class="token-section">
-      <label class="field-label">Notion Integration Token</label>
-      <div class="token-row">
-        <input class="token-input" id="tokenInput" type="password" placeholder="ntn_..." />
-        <button class="token-btn" onclick="saveToken()">저장</button>
-      </div>
-      <div class="token-status" id="tokenStatus"></div>
-    </div>
 
     <div class="input-section">
       <label class="field-label">식사 내용</label>
@@ -113,17 +137,30 @@
         <button class="type-btn" onclick="setType(this,'저녁')">저녁</button>
         <button class="type-btn" onclick="setType(this,'간식')">간식</button>
       </div>
-      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">채점하기</button>
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">측정하기</button>
     </div>
 
     <hr class="divider">
 
-    <div class="thinking" id="thinking">채점 중...</div>
+    <div class="thinking" id="thinking">
+      <div class="thinking-exclaim">!</div>
+      <div class="thinking-text">측정 중입니다.</div>
+    </div>
 
     <div class="result-section" id="resultSection">
       <div class="scores-grid" id="scoresGrid"></div>
       <div class="meta-row" id="metaRow"></div>
       <div class="comment-box" id="commentBox"></div>
+
+      <div class="token-section">
+        <label class="field-label">Notion Integration Token</label>
+        <div class="token-row">
+          <input class="token-input" id="tokenInput" type="password" placeholder="ntn_..." />
+          <button class="token-btn" onclick="saveToken()">저장</button>
+        </div>
+        <div class="token-status" id="tokenStatus"></div>
+      </div>
+
       <button class="save-btn" id="saveBtn" onclick="saveToNotion()">Notion에 저장</button>
       <div class="status-msg" id="statusMsg"></div>
     </div>
@@ -150,6 +187,7 @@
 
   function applyTheme(theme) {
     document.getElementById('root').setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
     document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
   }
 
@@ -183,20 +221,6 @@
     mealType = type;
   }
 
-  function getGradeColor(score) {
-    if (score >= 90) return '#2563eb';
-    if (score >= 80) return '#16a34a';
-    if (score >= 70) return '#ca8a04';
-    return '#ef4444';
-  }
-
-  function getGradeLabel(score) {
-    if (score >= 90) return 'A';
-    if (score >= 80) return 'B';
-    if (score >= 70) return 'C';
-    return 'D';
-  }
-
   async function analyze() {
     const meal = document.getElementById('mealInput').value.trim();
     if (!meal) return;
@@ -220,13 +244,13 @@
 [Score] 단순평균 아님. 가장 낮은 항목에 가중치. 하나 폭락하면 전체도 크게 하락.
 [등급] 90이상=A, 80~89=B, 70~79=C, 69이하=D. 플러스/마이너스 금지.
 [Prot] 단백질 추정량(g)만 기재.
-[Comment] [혈당] [혈압] [콜레] [프로틴] 4가지 관점, 각 30자 내외 한국어.
+[Comment] [혈당] [혈압] [콜레] [프로틴] 4가지 관점, 각 30자 내외 한국어. 각 항목은 반드시 줄바꿈(\\n)으로 구분.
 
 식사: ${meal}
 식사 유형: ${mealType}
 
 반환 JSON (이것만 출력):
-{"BS":숫자,"BP":숫자,"CHOL":숫자,"Score":숫자,"Prot":숫자,"Kcal":숫자,"Comment":"[혈당] ... [혈압] ... [콜레] ... [프로틴] ..."}`;
+{"BS":숫자,"BP":숫자,"CHOL":숫자,"Score":숫자,"Prot":숫자,"Kcal":숫자,"Comment":"[혈당] ...\\n[혈압] ...\\n[콜레] ...\\n[프로틴] ..."}`;
 
     try {
       const res = await fetch(
@@ -247,7 +271,7 @@
       lastResult = JSON.parse(match[0]);
       renderResult(lastResult);
     } catch(e) {
-      alert('채점 실패: ' + e.message);
+      alert('측정 실패: ' + e.message);
     }
 
     document.getElementById('thinking').classList.remove('visible');
@@ -264,7 +288,7 @@
     document.getElementById('scoresGrid').innerHTML = scores.map(s => `
       <div class="score-card">
         <div class="label">${s.label}</div>
-        <div class="val" style="color:${getGradeColor(s.val)}">${s.val}</div>
+        <div class="val">${s.val}</div>
         <div class="grade">${getGradeLabel(s.val)}</div>
       </div>
     `).join('');
@@ -275,13 +299,31 @@
       <div class="meta-item">유형<span>${mealType}</span></div>
     `;
 
-    const comment = r.Comment
-      .replace(/\[혈당\]/g, '<span class="tag">[혈당]</span>')
-      .replace(/\[혈압\]/g, '<span class="tag">[혈압]</span>')
-      .replace(/\[콜레\]/g, '<span class="tag">[콜레]</span>')
-      .replace(/\[프로틴\]/g, '<span class="tag">[프로틴]</span>');
-    document.getElementById('commentBox').innerHTML = comment;
+    const lines = r.Comment.split('\n').filter(l => l.trim());
+    const commentHTML = lines.map(line => {
+      const formatted = line
+        .replace(/\[혈당\]/g, '<span class="tag">[혈당]</span>')
+        .replace(/\[혈압\]/g, '<span class="tag">[혈압]</span>')
+        .replace(/\[콜레\]/g, '<span class="tag">[콜레]</span>')
+        .replace(/\[프로틴\]/g, '<span class="tag">[프로틴]</span>');
+      return `<span class="comment-line">${formatted}</span>`;
+    }).join('');
+    document.getElementById('commentBox').innerHTML = commentHTML;
+
     document.getElementById('resultSection').classList.add('visible');
+
+    const savedToken = localStorage.getItem('notion_token');
+    if (savedToken) {
+      document.getElementById('tokenInput').value = savedToken;
+      setTokenStatus('저장됨', 'ok');
+    }
+  }
+
+  function getGradeLabel(score) {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    return 'D';
   }
 
   async function saveToNotion() {
@@ -295,7 +337,7 @@
 
     document.getElementById('saveBtn').disabled = true;
     document.getElementById('statusMsg').textContent = '저장 중...';
-    document.getElementById('statusMsg').className = 'status-msg loading';
+    document.getElementById('statusMsg').className = 'status-msg';
 
     const meal = document.getElementById('mealInput').value.trim();
     const now = new Date().toISOString();
@@ -327,7 +369,7 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || '저장 실패');
       document.getElementById('statusMsg').textContent = 'Notion 저장 완료!';
-      document.getElementById('statusMsg').className = 'status-msg ok';
+      document.getElementById('statusMsg').className = 'status-msg';
       document.getElementById('mealInput').value = '';
       lastResult = null;
       document.getElementById('resultSection').classList.remove('visible');
@@ -339,11 +381,6 @@
   }
 
   initTheme();
-  const savedToken = localStorage.getItem('notion_token');
-  if (savedToken) {
-    document.getElementById('tokenInput').value = savedToken;
-    setTokenStatus('저장됨', 'ok');
-  }
 </script>
 </body>
 </html>
