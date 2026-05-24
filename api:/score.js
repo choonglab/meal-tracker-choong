@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -28,11 +28,8 @@ export default async function handler(req, res) {
 유지/가점: 불포화지방산(생선, 견과류), 수용성 식이섬유
 
 [Score] 단순 평균 아님. 가장 낮은 항목에 가중치. 하나 폭락하면 전체도 크게 하락.
-
 [등급] 90이상=A, 80~89=B, 70~79=C, 69이하=D. 플러스/마이너스 금지.
-
 [Prot] 한 끼 단백질 추정량(g).
-
 [Comment] [혈당] [혈압] [콜레] [프로틴] 4가지 관점, 각 30자 내외 한국어.
 
 식사: ${meal}
@@ -53,7 +50,6 @@ export default async function handler(req, res) {
         })
       }
     );
-
     const data = await response.json();
     const raw = data.candidates[0].content.parts[0].text;
     const match = raw.match(/\{[\s\S]*\}/);
